@@ -2,6 +2,7 @@
 import com.ibm.dbb.metadata.*
 import com.ibm.dbb.dependency.*
 import com.ibm.dbb.build.*
+import com.ibm.dbb.build.DBBConstants.CopyMode
 import com.ibm.dbb.build.report.records.*
 import com.ibm.dbb.build.report.*
 import groovy.transform.*
@@ -82,7 +83,15 @@ buildList.each { buildFile ->
 				println(errorMsg)
 				props.error = "true"
 				buildUtils.updateBuildResult(errorMsg:errorMsg)
-			} 
+			}
+
+			// get copy mode
+			DBBConstants.CopyMode transferCopyMode = DBBConstants.CopyMode.valueOf(props.getFileProperty("transfer_copyMode", buildFile))
+			// String copyMode = "CopyMode." + props.getFileProperty("transfer_copyMode", buildFile)
+			if(transferCopyMode == null ) {
+				transferCopyMode = DBBConstants.CopyMode.valueOf("TEXT")
+			}
+			println "copyMode " + transferCopyMode
 			
 			// allocate target dataset
 			if (!verifiedBuildDatasets.contains(targetDataset)) { // using a cache not to allocate all defined datasets
@@ -94,8 +103,15 @@ buildList.each { buildFile ->
 			String deployType = buildUtils.getDeployType("transfer", buildFile, null)
 
 			try {
-				int rc = new CopyToPDS().key(buildFile).file(new File(buildUtils.getAbsolutePath(buildFile))).dataset(targetDataset).member(member).output(true).deployType(deployType).execute()
-				if (props.verbose) println "** Copied $buildFile to $targetDataset with deployType $deployType (rc = $rc)"
+				int rc = new CopyToPDS().key(buildFile)
+					.file(new File(buildUtils.getAbsolutePath(buildFile)))
+					.copyMode(transferCopyMode)
+					.dataset(targetDataset)
+					.member(member)
+					.output(true)
+					.deployType(deployType)
+					.execute()
+				if (props.verbose) println "** Copied $buildFile to $targetDataset with copyMode $transferCopyMode and deployType $deployType (rc = $rc)"
 
 				if (rc!=0){
 					String errorMsg = "*! The CopyToPDS return code ($rc) for $buildFile exceeded the maximum return code allowed (0)."
