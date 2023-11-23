@@ -89,7 +89,7 @@ def createImpactBuildList() {
 				// String b2kPattern = "*b2kcopy*"
 				// PathMatcher b2kPattern = FileSystems.getDefault().getPathMatcher("glob:*b2kcopy*")
 				// if (b2kPattern.matches(changedFile)){
-				// 	println changedFile
+					println changedFile
 				// }
 				// if (changedFile ==~ /*b2kcopy*/) {
 				// 	println changedFile
