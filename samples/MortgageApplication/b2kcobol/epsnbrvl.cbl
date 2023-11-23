@@ -12,7 +12,7 @@
       *       INTEREST RATE
       *    OUTPUT:
       *       MONTHLY PAYMENT
-      *    LKL-02
+      *    LKL-03
       *    (C) 2020 IBM
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
