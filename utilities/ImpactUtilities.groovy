@@ -85,8 +85,15 @@ def createImpactBuildList() {
 				String impactSearch = props.getFileProperty('impactSearch', changedFile)
 				def impacts = findImpactedFiles(impactSearch, changedFile)
 
-				// MODIFICATION: Check if B2K copybook 
-				
+				// MODIFICATION: Check if B2K copybook
+				// String b2kPattern = "*b2kcopy*"
+				PathMatcher b2kPattern = FileSystems.getDefault().getPathMatcher("glob:*b2kcopy*")
+				if (b2kPattern.matches(changedFile)){
+					println changedFile
+				}
+				// if (changedFile ==~ /*b2kcopy*/) {
+				// 	println changedFile
+				// }
 				
 
 				impacts.each { impact ->
