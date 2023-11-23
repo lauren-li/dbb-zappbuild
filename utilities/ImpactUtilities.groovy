@@ -84,6 +84,9 @@ def createImpactBuildList() {
 				// list of impacts
 				String impactSearch = props.getFileProperty('impactSearch', changedFile)
 				def impacts = findImpactedFiles(impactSearch, changedFile)
+
+				// MODIFICATION: Check if B2K copybook 
+				
 				
 
 				impacts.each { impact ->
