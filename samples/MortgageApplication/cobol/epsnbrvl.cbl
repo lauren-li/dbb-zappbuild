@@ -12,7 +12,7 @@
       *       INTEREST RATE
       *    OUTPUT:
       *       MONTHLY PAYMENT
-      *    LL01
+      *    LL02
       *    (C) 2020 IBM
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
